@@ -1,0 +1,59 @@
+<div [class]="uiTree.treeStyle">
+  <ul [class]="uiTree.treeUlStyle">
+    <!--第一级-->
+    <li *ngFor="let treeNode of uiTree.getChildNodes(0)" [ngClass]="setLastClasses(treeNode)">
+      <div *ngIf="uiTree.isCheckbox" [ngClass]="setCheckboxClasses(treeNode)">&nbsp;</div>
+      <i class="jstree-icon jstree-ocl" (click)="oclClick(treeNode)"></i>
+      <a [ngClass]="setALabelClasses(treeNode)" href="#" (click)="aLabelClick(treeNode)" tabindex="-1">
+        <i *ngIf="uiTree.isCheckbox" class="jstree-icon jstree-checkbox"></i>
+        <i class="jstree-icon jstree-themeicon fa fa-folder icon-state-warning icon-lg jstree-themeicon-custom"></i>{{treeNode.name}}
+      </a>
+      
+      <ul *ngIf="!uiTree.isLeaf(treeNode)" class="jstree-children">
+        <li *ngFor="let childNode of uiTree.getChildNodes(treeNode.id)" [ngClass]="setLastClasses(childNode)">
+          <div *ngIf="uiTree.isCheckbox" [ngClass]="setCheckboxClasses(childNode)">&nbsp;</div>
+          <i class="jstree-icon jstree-ocl" (click)="oclClick(childNode)"></i>
+          <a [ngClass]="setALabelClasses(childNode)" href="#" tabindex="-1" (click)="aLabelClick(childNode)">
+            <i *ngIf="uiTree.isCheckbox" class="jstree-icon jstree-checkbox"></i>
+            <i class="jstree-icon jstree-themeicon fa fa-folder icon-state-warning icon-lg jstree-themeicon-custom"></i>{{childNode.name}}
+          </a>
+   
+          <ul *ngIf="!uiTree.isLeaf(childNode)" class="jstree-children">
+            <li *ngFor="let grandsonNode of uiTree.getChildNodes(childNode.id)" [ngClass]="setLastClasses(grandsonNode)">
+              <div *ngIf="uiTree.isCheckbox" [ngClass]="setCheckboxClasses(grandsonNode)">&nbsp;</div>
+              <i class="jstree-icon jstree-ocl" (click)="oclClick(grandsonNode)"></i>
+              <a [ngClass]="setALabelClasses(grandsonNode)" href="#" tabindex="-1" (click)="aLabelClick(grandsonNode)">
+                <i *ngIf="uiTree.isCheckbox" class="jstree-icon jstree-checkbox"></i>
+                <i class="jstree-icon jstree-themeicon fa fa-folder icon-state-warning icon-lg jstree-themeicon-custom"></i>{{grandsonNode.name}}
+              </a>
+ 
+              <ul *ngIf="!uiTree.isLeaf(grandsonNode)" class="jstree-children">
+                <li *ngFor="let greatGrandsonNode of uiTree.getChildNodes(grandsonNode.id)" [ngClass]="setLastClasses(greatGrandsonNode)">
+                  <div *ngIf="uiTree.isCheckbox" [ngClass]="setCheckboxClasses(greatGrandsonNode)">&nbsp;</div>
+                  <i class="jstree-icon jstree-ocl" (click)="oclClick(greatGrandsonNode)"></i>
+                  <a [ngClass]="setALabelClasses(greatGrandsonNode)" href="#" tabindex="-1" (click)="aLabelClick(greatGrandsonNode)">
+                    <i *ngIf="uiTree.isCheckbox" class="jstree-icon jstree-checkbox"></i>
+                    <i class="jstree-icon jstree-themeicon fa fa-folder icon-state-warning icon-lg jstree-themeicon-custom"></i>{{greatGrandsonNode.name}}
+                  </a>
+ 
+                  <ul *ngIf="!uiTree.isLeaf(greatGrandsonNode)" class="jstree-children">
+                    <li *ngFor="let leafNode of uiTree.getChildNodes(greatGrandsonNode)" [ngClass]="setLastClasses(leafNode)">
+                      <div *ngIf="uiTree.isCheckbox" [ngClass]="setCheckboxClasses(leafNode)">&nbsp;</div>
+                      <i class="jstree-icon jstree-ocl" (click)="oclClick(leafNode)"></i>
+                      <a [ngClass]="setALabelClasses(leafNode)" href="#" tabindex="-1" (click)="aLabelClick(leafNode)">
+                        <i *ngIf="uiTree.isCheckbox" class="jstree-icon jstree-checkbox"></i>
+                        <i class="jstree-icon jstree-themeicon fa fa-folder icon-state-warning icon-lg jstree-themeicon-custom"></i>{{leafNode.name}}
+                      </a>
+                    </li>
+                  </ul>
+                </li>
+              </ul>
+              
+            </li>
+          </ul>
+        </li>
+      </ul>
+
+    </li>
+  </ul>
+</div>
