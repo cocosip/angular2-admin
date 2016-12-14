@@ -4,7 +4,6 @@ import { AdminComponent } from '../admin.component';
 import { DashboardComponent } from '../dashboard/dashboard.component';
 // Home路由
 const adminRoutes: Routes = [
-  { path: '', redirectTo: '/admin', pathMatch: 'full' },
   {
     path: 'admin',
     component: AdminComponent,
