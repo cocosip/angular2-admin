@@ -1,21 +1,12 @@
 import { Component, OnInit } from '@angular/core';
-import { Salert, SALERT_TYPE } from './shared/salert/salert';
 import { UiTree, TreeNode } from './shared/uitree/uitree';
 @Component({
   selector: 'app-root',
   templateUrl: './app.component.html',
-  styleUrls: ['./app.component.css']
+  styleUrls: ['./app.component.css'],
 })
 export class AppComponent implements OnInit {
-  title = 'Salert';
-  salert: Salert;
   uiTree: UiTree;
-  alert(): void {
-    this.salert = new Salert(SALERT_TYPE.Warn, '出现了一些内部错误');
-  }
-  alertConfirmed(agreed: boolean) {
-    // console.log(agreed);
-  }
   ngOnInit() {
     // let uiTree = new UiTree(true);
     // uiTree.addTreeNode(new TreeNode(1, '节点1', 0));

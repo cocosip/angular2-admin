@@ -1,14 +1,19 @@
 import { Component, OnInit, OnDestroy } from '@angular/core';
 import { RouterModule, Routes, Router } from '@angular/router';
 import { BrowserDomAdapter } from '@angular/platform-browser/src/browser/browser_adapter';
+import { LocalStorageService, SessionStorageService } from 'ng2-webstorage';
+import { AuthService } from '../core/auth.service';
+import { AuthInput } from '../core/model/auth.input';
+import { STORAGE_NAMES } from '../core/storage.names';
 @Component({
     selector: 'app-sign-in',
     templateUrl: './sign-in.component.html',
-    styleUrls: ['./sign-in.component.css']
+    styleUrls: ['./sign-in.component.css'],
+    providers: [AuthService]
 })
 export class SignInComponent implements OnInit, OnDestroy {
     dom: BrowserDomAdapter;
-    constructor(private router: Router) {
+    constructor(private router: Router, private storage: LocalStorageService, private authService: AuthService) {
 
     }
 
@@ -28,6 +33,8 @@ export class SignInComponent implements OnInit, OnDestroy {
     }
 
     signIn() {
+        let managerInfo = this.authService.auth(new AuthInput('admin', '123456'));
+        this.storage.store(STORAGE_NAMES.CurrentManager, managerInfo);
         this.router.navigate(['/admin']);
     }
 
