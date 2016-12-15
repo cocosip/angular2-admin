@@ -3,7 +3,9 @@ import { NgModule } from '@angular/core';
 import { FormsModule } from '@angular/forms';
 import { HttpModule } from '@angular/http';
 import { MaterialModule } from '@angular/material';
+import { Ng2Webstorage } from 'ng2-webstorage';
 import { SharedModule } from './shared/shared.module';
+import { CoreModule } from './core/core.module';
 import { AdminRoutingModule } from './admin/admin-routing/admin-routing.module';
 import { AdminModule } from './admin/admin.module';
 // 组件
@@ -25,7 +27,9 @@ const appRoutes: Routes = [
         FormsModule,
         HttpModule,
         MaterialModule.forRoot(),
+        Ng2Webstorage,
         SharedModule,
+        CoreModule,
         AdminRoutingModule,
         AdminModule,
         RouterModule.forRoot(appRoutes, { useHash: true })
