@@ -1,7 +1,10 @@
 import { Component, OnInit } from '@angular/core';
+import { RouterModule, Routes, Router } from '@angular/router';
 import { BrowserDomAdapter } from '@angular/platform-browser/src/browser/browser_adapter';
 import { LocalStorageService, SessionStorageService } from 'ng2-webstorage';
 import { STORAGE_NAMES } from '../../core/storage.names';
+import { ManagerInfo } from '../../core/model/managerinfo.output';
+import { Salert, SALERT_TYPE } from '../../shared/salert/salert';
 @Component({
   selector: 'app-header',
   templateUrl: './header.component.html',
@@ -11,8 +14,9 @@ export class HeaderComponent implements OnInit {
   iscollapse: boolean = false;
   isuserMenuOpen: boolean = false;
   dom: BrowserDomAdapter;
-  //currentManager:ManagerInfo;
-  constructor(private storage: LocalStorageService) {
+  salert: Salert;
+  currentManager: ManagerInfo;
+  constructor(private router: Router, private storage: LocalStorageService) {
 
   }
   // 收缩
@@ -40,11 +44,21 @@ export class HeaderComponent implements OnInit {
   setUsermenuOpen(): void {
     this.isuserMenuOpen = !this.isuserMenuOpen;
   }
-
+  // 退出
+  signout(): void {
+    this.salert = new Salert(SALERT_TYPE.Confirm, '确定要退出吗?');
+  }
+  // 确定按钮
+  onConfirmed(confirmed: boolean) {
+    if (confirmed) {
+      this.storage.clear(STORAGE_NAMES.CurrentManager);
+      this.router.navigate(['/login']);
+    }
+  }
 
   ngOnInit() {
     this.dom = new BrowserDomAdapter();
-    this.storage.retrieve(STORAGE_NAMES.CurrentManager);
+    this.currentManager = this.storage.retrieve(STORAGE_NAMES.CurrentManager);
   }
 
 }

@@ -9,8 +9,9 @@ import { Salert } from './salert';
 export class SalertComponent implements OnInit {
 
   @Input()
-  salert: Salert;
-  @Output() onConfirmed = new EventEmitter<boolean>();
+  public salert: Salert;
+  @Output()
+  public onConfirmed = new EventEmitter<boolean>();
 
   constructor() { }
   ngOnInit() {

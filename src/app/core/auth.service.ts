@@ -7,6 +7,6 @@ export class AuthService {
     constructor() { }
     // 登录,认证
     auth(authinput: AuthInput): ManagerInfo {
-        return new ManagerInfo('token', 'Admin', '管理员');
+        return new ManagerInfo('token', 'Admin', '管理员', '/assets/img/user2-160x160.jpg');
     }
 }
