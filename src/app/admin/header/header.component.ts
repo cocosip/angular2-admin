@@ -1,7 +1,7 @@
 import { Component, OnInit } from '@angular/core';
 import { RouterModule, Routes, Router } from '@angular/router';
 import { BrowserDomAdapter } from '@angular/platform-browser/src/browser/browser_adapter';
-import { LocalStorageService, SessionStorageService } from 'ng2-webstorage';
+import { LocalStorageService, SessionStorageService, LocalStorage } from 'ng2-webstorage';
 import { STORAGE_NAMES } from '../../core/storage.names';
 import { ManagerInfo } from '../../core/model/managerinfo.output';
 import { Salert, SALERT_TYPE } from '../../shared/salert/salert';
@@ -15,7 +15,8 @@ export class HeaderComponent implements OnInit {
   isuserMenuOpen: boolean = false;
   dom: BrowserDomAdapter;
   salert: Salert;
-  currentManager: ManagerInfo;
+  @LocalStorage(STORAGE_NAMES.CurrentManager)
+  public currentManager: ManagerInfo;
   constructor(private router: Router, private storage: LocalStorageService) {
 
   }
@@ -52,13 +53,22 @@ export class HeaderComponent implements OnInit {
   onConfirmed(confirmed: boolean) {
     if (confirmed) {
       this.storage.clear(STORAGE_NAMES.CurrentManager);
-      this.router.navigate(['/login']);
     }
+  }
+
+  navigateToLogin() {
+    this.router.navigate(['/login']);
   }
 
   ngOnInit() {
     this.dom = new BrowserDomAdapter();
-    this.currentManager = this.storage.retrieve(STORAGE_NAMES.CurrentManager);
+    this.storage.observe(STORAGE_NAMES.CurrentManager)
+      .subscribe((x) => {
+        if (x === null) {
+          this.storage.clear();
+          this.navigateToLogin();
+        }
+      });
   }
 
 }
