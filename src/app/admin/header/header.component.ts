@@ -3,8 +3,9 @@ import { RouterModule, Routes, Router } from '@angular/router';
 import { BrowserDomAdapter } from '@angular/platform-browser/src/browser/browser_adapter';
 import { LocalStorageService, SessionStorageService, LocalStorage } from 'ng2-webstorage';
 import { STORAGE_NAMES } from '../../core/storage.names';
+import { SweetAlert, ALERT_TYPE } from '../../shared/sweet-alert/sweet-alert';
+import { SweetAlertService } from '../../shared/sweet-alert/sweet-alert.service';
 import { ManagerInfo } from '../../core/model/managerinfo.output';
-import { Salert, SALERT_TYPE } from '../../shared/salert/salert';
 @Component({
   selector: 'app-header',
   templateUrl: './header.component.html',
@@ -14,10 +15,9 @@ export class HeaderComponent implements OnInit {
   iscollapse: boolean = false;
   isuserMenuOpen: boolean = false;
   dom: BrowserDomAdapter;
-  salert: Salert;
   @LocalStorage(STORAGE_NAMES.CurrentManager)
   public currentManager: ManagerInfo;
-  constructor(private router: Router, private storage: LocalStorageService) {
+  constructor(private router: Router, private storage: LocalStorageService, private sweetAlertService: SweetAlertService) {
 
   }
   // 收缩
@@ -47,14 +47,15 @@ export class HeaderComponent implements OnInit {
   }
   // 退出
   signout(): void {
-    this.salert = new Salert(SALERT_TYPE.Confirm, '确定要退出吗?');
+    let sweetAlert = new SweetAlert(ALERT_TYPE.Confirm, '确定要退出吗?');
+    this.sweetAlertService.alert(sweetAlert);
   }
-  // 确定按钮
-  onConfirmed(confirmed: boolean) {
-    if (confirmed) {
-      this.storage.clear(STORAGE_NAMES.CurrentManager);
-    }
-  }
+  // // 确定按钮
+  // onConfirmed(confirmed: boolean) {
+  //   if (confirmed) {
+  //     this.storage.clear(STORAGE_NAMES.CurrentManager);
+  //   }
+  // }
 
   navigateToLogin() {
     this.router.navigate(['/login']);

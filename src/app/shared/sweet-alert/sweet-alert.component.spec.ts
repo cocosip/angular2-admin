@@ -3,21 +3,21 @@ import { async, ComponentFixture, TestBed } from '@angular/core/testing';
 import { By } from '@angular/platform-browser';
 import { DebugElement } from '@angular/core';
 
-import { SalertComponent } from './salert.component';
+import { SweetAlertComponent } from './sweet-alert.component';
 
-describe('SalertComponent', () => {
-  let component: SalertComponent;
-  let fixture: ComponentFixture<SalertComponent>;
+describe('SweetAlertComponent', () => {
+  let component: SweetAlertComponent;
+  let fixture: ComponentFixture<SweetAlertComponent>;
 
   beforeEach(async(() => {
     TestBed.configureTestingModule({
-      declarations: [ SalertComponent ]
+      declarations: [ SweetAlertComponent ]
     })
     .compileComponents();
   }));
 
   beforeEach(() => {
-    fixture = TestBed.createComponent(SalertComponent);
+    fixture = TestBed.createComponent(SweetAlertComponent);
     component = fixture.componentInstance;
     fixture.detectChanges();
   });
