@@ -13,7 +13,8 @@ import { ManagerInfo } from '../../core/model/managerinfo.output';
 })
 export class HeaderComponent implements OnInit {
   iscollapse: boolean = false;
-  isuserMenuOpen: boolean = false;
+  isUserMenuOpen: boolean = false;
+  isNotificationOpen: boolean = false;
   dom: BrowserDomAdapter;
   @LocalStorage(STORAGE_NAMES.CurrentManager)
   public currentManager: ManagerInfo;
@@ -37,25 +38,49 @@ export class HeaderComponent implements OnInit {
       'dropdown': true,
       'user': true,
       'user-menu': true,
-      'open': this.isuserMenuOpen
+      'open': this.isUserMenuOpen
     };
     return classes;
   }
   // 设置用户菜单是否开启
   setUsermenuOpen(): void {
-    this.isuserMenuOpen = !this.isuserMenuOpen;
+    let open = !this.isUserMenuOpen;
+    this.setClose();
+    this.isUserMenuOpen = open;
   }
+  // 是否打开通知
+  setNotificationClasses() {
+    let classes = {
+      'dropdown': true,
+      'notifications-menu': true,
+      'open': this.isNotificationOpen
+    };
+    return classes;
+  }
+
+  // 设置用户菜单是否开启
+  setNotificationOpen(): void {
+    let open = !this.isNotificationOpen;
+    this.setClose();
+    this.isNotificationOpen = open;
+  }
+
+  // 设置为关闭
+  private setClose(): void {
+    this.isNotificationOpen = false;
+    this.isUserMenuOpen = false;
+  }
+
   // 退出
   signout(): void {
     let sweetAlert = new SweetAlert(ALERT_TYPE.Confirm, '确定要退出吗?');
     this.sweetAlertService.alert(sweetAlert);
+    this.sweetAlertService.observe(sweetAlert.id).subscribe(x => {
+      if (x.isComplete && x.confirmResult) {
+        this.storage.clear(STORAGE_NAMES.CurrentManager);
+      }
+    });
   }
-  // // 确定按钮
-  // onConfirmed(confirmed: boolean) {
-  //   if (confirmed) {
-  //     this.storage.clear(STORAGE_NAMES.CurrentManager);
-  //   }
-  // }
 
   navigateToLogin() {
     this.router.navigate(['/login']);
