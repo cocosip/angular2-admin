@@ -4,27 +4,32 @@
     <!-- Sidebar user panel -->
     <div class="user-panel">
       <div class="pull-left image">
-        <img [src]="currentManager.portrait" class="img-circle" alt="User Image">
+        <img [src]="currentManager.portrait" class="img-circle">
       </div>
       <div class="pull-left info">
         <p>{{currentManager.username}}</p>
         <a href="javascript:;"><i class="fa fa-circle text-success"></i> 在线</a>
       </div>
     </div>
-    <!-- sidebar menu: : style can be found in sidebar.less -->
     <!--菜单导航-->
-    <!--<ul class="sidebar-menu">
-      <li *ngFor="let menu of sidebarMenu.menus" [ngClass]="setMenuActiveClasses(menu)">
-        <a href="javascript:;">
-          <i class="fa fa-dashboard"></i> <span>{{menu.name}}</span>
+    <ul class="sidebar-menu">
+      <li *ngFor="let menu of sidebarMenu.getLevelMenus()" [ngClass]="setMenuActiveClasses(menu)">
+        <a href="javascript:;" (click)="activeMenu(menu)">
+          <i [class]="menu.icon"></i> <span>{{menu.name}}</span>
           <span class="pull-right-container">
-              <i class="menu.icon"></i>
+              <i class="fa fa-angle-left pull-right"></i>
             </span>
         </a>
+        <ul *ngIf="!sidebarMenu.isLeaf(menu)" class="treeview-menu menu-open">
+          <li *ngFor="let childMenu of sidebarMenu.getChildMenus(menu)">
+            <a [routerLink]="childMenu.routePath">
+              <i [class]="childMenu.icon"></i> {{childMenu.name}}</a>
+          </li>
+        </ul>
       </li>
-    </ul>-->
-    
-    <ul class="sidebar-menu">
+    </ul>
+
+    <!--<ul class="sidebar-menu">
       <li class="active treeview">
         <a href="javascript:;">
           <i class="fa fa-dashboard"></i> <span>Dashboard</span>
@@ -92,7 +97,7 @@
           <li><a href="pages/UI/modals.html"><i class="fa fa-circle-o"></i> Modals</a></li>
         </ul>
       </li>
-    </ul>
+    </ul>-->
   </section>
   <!-- /.sidebar -->
 </aside>

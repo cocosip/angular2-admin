@@ -15,6 +15,6 @@ import { BreadcrumbComponent } from './breadcrumb/breadcrumb.component';
     RouterModule,
     SharedModule
   ],
-  declarations: [AdminComponent, HeaderComponent, FooterComponent, SidebarComponent, DashboardComponent, BreadcrumbComponent]
+  declarations: [AdminComponent, HeaderComponent, FooterComponent, SidebarComponent, DashboardComponent, BreadcrumbComponent],
 })
 export class AdminModule { }

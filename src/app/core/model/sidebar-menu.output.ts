@@ -1,24 +1,29 @@
 import { OnInit } from '@angular/core';
 // 导航菜单
-export class SidebarMenu implements OnInit {
-    menus: Array<Menu>;
+export class SidebarMenu {
+    public menus: Array<Menu> = new Array<Menu>();
     // 判断某个菜单是否为子菜单
-    isLeaf(menu: Menu): boolean {
+    public isLeaf(menu: Menu): boolean {
         let childMenus = this.menus.filter(x => x.parentId === menu.id);
-        return childMenus.length > 0;
+        return childMenus.length <= 0;
     }
     // 获取一级目录
-    getLevelMenus() {
+    public getLevelMenus() {
         return this.menus.filter(x => x.parentId === 0);
     }
 
-    getChildMenus(menu: Menu) {
+    public getChildMenus(menu: Menu) {
         return this.menus.filter(x => x.parentId === menu.id);
     }
 
+    // 添加菜单
+    public addMenu(menu: Menu) {
+        this.menus.push(menu);
+    }
 
-    ngOnInit() {
-        this.menus = new Array<Menu>();
+    // 添加菜单
+    public addMenus(menus: Array<Menu>) {
+        this.menus.concat(menus);
     }
 }
 
@@ -31,7 +36,7 @@ export class Menu {
     routePath: string; // 路由
     isActive: boolean; // 是否展开
     icon: string; // icon图标
-    constructor(id: any, parentId: any, sort: any, name: string, routePath: string, isActive = false, icon = '') {
+    constructor(id: any, parentId: any, sort: any, name: string, routePath: string, isActive = false, icon = 'fa fa-circle-o') {
         this.id = id;
         this.parentId = parentId;
         this.sort = sort;
@@ -39,6 +44,10 @@ export class Menu {
         this.routePath = routePath;
         this.isActive = isActive;
         this.icon = icon;
+    }
+
+    activeMenu() {
+        this.isActive = !this.isActive;
     }
 }
 
