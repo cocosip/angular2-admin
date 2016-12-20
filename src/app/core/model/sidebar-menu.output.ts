@@ -12,8 +12,13 @@ export class SidebarMenu {
         return this.menus.filter(x => x.parentId === 0);
     }
 
-    public getChildMenus(menu: Menu) {
+    public getChildMenus(menu: Menu): Array<Menu> {
         return this.menus.filter(x => x.parentId === menu.id);
+    }
+
+    // 获取兄弟菜单
+    public getBrotherMenus(menu: Menu): Array<Menu> {
+        return this.menus.filter(x => x.parentId === menu.parentId && x.id !== menu.id);
     }
 
     // 添加菜单

@@ -1,4 +1,4 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, OnInit, trigger, state, style, transition, animate, AnimationTransitionEvent } from '@angular/core';
 import { RouterModule, Routes, Router, ActivatedRoute } from '@angular/router';
 import { LocalStorageService, SessionStorageService } from 'ng2-webstorage';
 import { STORAGE_NAMES } from '../../core/storage.names';
@@ -9,7 +9,22 @@ import { MenuService } from '../../core/menu.service';
   selector: 'app-sidebar',
   templateUrl: './sidebar.component.html',
   styleUrls: ['./sidebar.component.css'],
-  providers: [MenuService]
+  providers: [MenuService],
+  animations: [
+    trigger('menuActiveState', [
+      state('inactive', style({
+        'display': 'none',
+        'height': '0',
+        'overflow': 'hidden'
+       })),
+      state('active', style({
+        'display': 'block',
+        'height': '*',
+        'overflow': 'hidden'
+      })),
+      transition('inactive => active', animate('400ms ease-in ')),
+      transition('active => inactive', animate('400ms ease-out '))
+    ])]
 })
 export class SidebarComponent implements OnInit {
   currentManager: ManagerInfo;
@@ -21,8 +36,8 @@ export class SidebarComponent implements OnInit {
   // 菜单是否展开样式
   setMenuActiveClasses(menu: Menu) {
     let classes = {
-      'active': menu.isActive,
-      'treeview': true
+      'treeview': true,
+      'active': menu.isActive
     };
     return classes;
   }
@@ -32,7 +47,17 @@ export class SidebarComponent implements OnInit {
       menu.activeMenu();
     }
   }
+  // 获取是否活动的菜单状态
+  getActiveState(menu: Menu) {
+    if (menu.isActive) {
+      return 'active';
+    }
+    return 'inactive';
+  }
+  // 动画完成之后的效果
+  animationDone(evnt: AnimationTransitionEvent) {
 
+  }
   ngOnInit() {
     this.currentManager = this.storage.retrieve(STORAGE_NAMES.CurrentManager);
     // breadcrumb
